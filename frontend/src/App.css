@@ -1,0 +1,7 @@
+.successTab span {
+  color: #3a9bdc !important;
+}
+.react-tabs__tab--selected {
+  background: #002a36;
+  color: #ffffff;
+}
