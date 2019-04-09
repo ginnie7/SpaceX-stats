@@ -1,0 +1,25 @@
+{
+  "name": "spacex-graphql",
+  "version": "1.0.0",
+  "description": "SpaceX missions",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "frontend": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run frontend\""
+  },
+  "author": "Ginnie",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "concurrently": "^4.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "express-graphql": "^0.7.1",
+    "graphql": "^14.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
