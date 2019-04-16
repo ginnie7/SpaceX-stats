@@ -26,13 +26,11 @@ const LAUNCH_QUERY = gql`
   }
 `;
 
-// TODO: for future launches do not display "Successful" and youtube
-// launch.launch_date_local > today.toISOString()
-
 export class Launch extends Component {
   render() {
     let { flight_number } = this.props.match.params;
     flight_number = parseInt(flight_number);
+    const today = new Date();
     return (
       <Fragment>
         <Query query={LAUNCH_QUERY} variables={{ flight_number }}>
@@ -53,6 +51,9 @@ export class Launch extends Component {
 
             return (
               <div>
+                <Link to="/" className="btn btn-secondary mt-3">
+                  Back
+                </Link>
                 <h1 className="display-4 my-3">Mission: {mission_name}</h1>
                 <h4 className="mb-3">Launch Details</h4>
                 <ul className="list-group">
@@ -65,25 +66,29 @@ export class Launch extends Component {
                       {launch_date_local}
                     </Moment>
                   </li>
-                  <li className="list-group-item">
-                    Successful: {launch_success ? 'Yes' : 'No'}
-                  </li>
+                  {launch_success === null ? null : (
+                    <li className="list-group-item">
+                      Successful: {launch_success ? 'Yes' : 'No'}
+                    </li>
+                  )}
                   <li className="list-group-item">
                     Launch Site: {site_name_long}
                   </li>
-                  <li className="list-group-item">Launch Details: {details}</li>
-                  <li className="list-group-item">
-                    <iframe
-                      title="ytplayer"
-                      id="ytplayer"
-                      type="text/html"
-                      width="640"
-                      height="360"
-                      src={`https://www.youtube.com/embed/${youtube_id}?autoplay=0`}
-                      frameBorder="0"
-                      style={{ maxWidth: '100%' }}
-                    />
-                  </li>
+                  <li className="list-group-item">Details: {details}</li>
+                  {launch_date_local > today.toISOString() ? null : (
+                    <li className="list-group-item">
+                      <iframe
+                        title="ytplayer"
+                        id="ytplayer"
+                        type="text/html"
+                        width="640"
+                        height="360"
+                        src={`https://www.youtube.com/embed/${youtube_id}?autoplay=0`}
+                        frameBorder="0"
+                        style={{ maxWidth: '100%' }}
+                      />
+                    </li>
+                  )}
                 </ul>
                 <h4 className="my-3">Rocket Details</h4>
                 <ul className="list-group">
@@ -92,10 +97,6 @@ export class Launch extends Component {
                     Rocket Type: {rocket_type}
                   </li>
                 </ul>
-                <hr />
-                <Link to="/" className="btn btn-secondary">
-                  Back
-                </Link>
               </div>
             );
           }}

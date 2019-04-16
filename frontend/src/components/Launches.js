@@ -6,8 +6,6 @@ import 'react-tabs/style/react-tabs.css';
 import LaunchItem from './LaunchItem';
 import MissionKey from './MissionKey';
 
-// TODO: order by date descending
-
 class Launches extends Component {
   render() {
     const {
@@ -18,33 +16,19 @@ class Launches extends Component {
 
     return (
       <Fragment>
+        <h1 id="list-title">SpaceX Launches</h1>
         <Tabs>
           <TabList>
-            <Tab>All</Tab>
-            <Tab>Completed</Tab>
-            <Tab>Upcoming</Tab>
             <Tab>Successful</Tab>
+            <Tab>Upcoming</Tab>
+            <Tab>Completed</Tab>
           </TabList>
           <TabPanel>
-            {' '}
-            <MissionKey />
-            {loading ? (
-              <h4>Loading...</h4>
-            ) : (
-              launches.map(launch => (
-                <LaunchItem key={launch.flight_number} launch={launch} />
-              ))
-            )}
-          </TabPanel>
-          <TabPanel>
-            <MissionKey />
             {loading ? (
               <h4>Loading...</h4>
             ) : (
               launches
-                .filter(
-                  launch => launch.launch_date_local < today.toISOString()
-                )
+                .filter(launch => launch.launch_success === true)
                 .map(launch => (
                   <LaunchItem key={launch.flight_number} launch={launch} />
                 ))
@@ -64,11 +48,14 @@ class Launches extends Component {
             )}
           </TabPanel>
           <TabPanel>
+            <MissionKey />
             {loading ? (
               <h4>Loading...</h4>
             ) : (
               launches
-                .filter(launch => launch.launch_success === true)
+                .filter(
+                  launch => launch.launch_date_local < today.toISOString()
+                )
                 .map(launch => (
                   <LaunchItem key={launch.flight_number} launch={launch} />
                 ))

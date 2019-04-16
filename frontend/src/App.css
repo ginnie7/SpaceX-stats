@@ -5,3 +5,8 @@
   background: #002a36;
   color: #ffffff;
 }
+#list-title {
+  color: #a7a9ac;
+  text-shadow: rgba(255, 255, 255, 0.3) 1px 1px 7px;
+  text-align: center;
+}
